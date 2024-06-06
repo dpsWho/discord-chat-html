@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2c2f33;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #23272a;
+        }
+        .messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: scroll;
+            background-color: #36393f;
+        }
+        .message {
+            margin-bottom: 15px;
+        }
+        .message .username {
+            font-weight: bold;
+            color: #7289da;
+        }
+        .message .time {
+            font-size: 0.8em;
+            color: #72767d;
+        }
+        .message .text {
+            margin: 5px 0;
+        }
+        .input-container {
+            display: flex;
+            padding: 10px;
+            background-color: #40444b;
+            border-top: 1px solid #23272a;
+        }
+        .input-container input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #dcddde;
+            background-color: #2c2f33;
+        }
+        .input-container input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="messages" id="messageContainer">
+            <div class="message">
+                <div class="username">User1 <span class="time">10:00 AM</span></div>
+                <div class="text">Hello, how are you?</div>
+            </div>
+            <div class="message">
+                <div class="username">User2 <span class="time">10:01 AM</span></div>
+                <div class="text">I'm good, thanks! How about you?</div>
+            </div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="messageInput" placeholder="Type a message..." onkeydown="sendMessage(event)">
+        </div>
+    </div>
+
+    <script>
+        function sendMessage(event) {
+            if (event.key === 'Enter') {
+                const messageInput = document.getElementById('messageInput');
+                const messageContainer = document.getElementById('messageContainer');
+
+                if (messageInput.value.trim() !== '') {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message');
+
+                    const usernameDiv = document.createElement('div');
+                    usernameDiv.classList.add('username');
+                    usernameDiv.innerHTML = `You <span class="time">${new Date().toLocaleTimeString()}</span>`;
+
+                    const textDiv = document.createElement('div');
+                    textDiv.classList.add('text');
+                    textDiv.textContent = messageInput.value;
+
+                    messageDiv.appendChild(usernameDiv);
+                    messageDiv.appendChild(textDiv);
+
+                    messageContainer.appendChild(messageDiv);
+
+                    messageInput.value = '';
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
